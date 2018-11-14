@@ -1,0 +1,16 @@
+{
+  "clang-format.executable": "${workspaceRoot}/node_modules/.bin/clang-format",
+  "clang-format.language.javascript.enable": false,
+  "clang-format.language.typescript.enable": false,
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.associations": {
+    ".prettierrc": "json",
+    ".stylelintrc": "json"
+  },
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "files.exclude": {
+    "dist": true,
+    "node_modules": true
+  }
+}

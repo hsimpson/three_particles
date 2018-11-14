@@ -1,0 +1,43 @@
+{
+  "name": "three_particles",
+  "version": "1.0.0",
+  "description": "WebGL Particles with three.js",
+  "main": "index.js",
+  "author": "Daniel Toplak <homer.simpson123@gmx.de>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@types/jquery": "^3.3.22",
+    "@types/node": "^10.12.7",
+    "@types/spectrum": "^1.5.30",
+    "@types/three": "^0.93.9",
+    "@types/tinycolor2": "^1.4.1",
+    "@types/webgl2": "^0.0.4",
+    "browserify": "^16.2.3",
+    "clang-format": "^1.2.4",
+    "del": "^3.0.0",
+    "eslint": "^5.9.0",
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.6.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "node-ts": "^2.1.2",
+    "stylelint": "^9.8.0",
+    "stylelint-config-standard": "^18.2.0",
+    "tsify": "^4.0.0",
+    "tslint": "^5.11.0",
+    "tslint-consistent-codestyle": "^1.14.0",
+    "tslint-microsoft-contrib": "^5.2.1",
+    "typescript": "^3.1.6",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.8",
+    "@fortawesome/free-solid-svg-icons": "^5.5.0",
+    "jquery": "^3.3.1",
+    "spectrum-colorpicker": "^1.8.0",
+    "three": "^0.98.0",
+    "tinycolor2": "^1.4.1"
+  }
+}

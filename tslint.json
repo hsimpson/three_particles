@@ -1,0 +1,34 @@
+{
+  "extends": [
+    "tslint:recommended"
+  ],
+  "rules": {
+    "quotemark": [
+      true,
+      "single",
+      "avoid-escape"
+    ],
+    "variable-name": [
+      true,
+      "allow-leading-underscore"
+    ],
+    "no-unused": {
+      "severity": "warn",
+      "options": [
+        true
+      ]
+    },
+    "no-suspicious-comment": {
+      "severity": "warn",
+      "options": [
+        true
+      ]
+    },
+    "trailing-comma": false,
+    "no-consecutive-blank-lines": false
+  },
+  "rulesDirectory": [
+    "tslint-consistent-codestyle",
+    "tslint-microsoft-contrib"
+  ]
+}

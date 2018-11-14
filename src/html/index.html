@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Three.js particles</title>
+
+  <!-- third party css-->
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/thirdparty.css">
+  <script src="js/thirdparty.js"></script>
+
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/app.js"></script>
+
+</head>
+
+<body>
+  <canvas id="renderCanvas"></canvas>
+  <div id="settingsButton"><i class="fas fa-bars fa-lg"></i></div>
+  <div id="settings" class="flex-column">
+    <div class="flex-row title-row">
+      <span>Settings</span>
+    </div>
+    <div class="flex-row">
+      <input type="range" id="particleCount" min="10" max="1000">
+      <span>Particles&sup3;:</span><span id="particleCountText"></span>
+    </div>
+    <div class="flex-row">
+      <input type="range" id="gravity" min="-1" max="1" step="0.1">
+      <span>Gravity:</span><span id="gravityText"></span>
+    </div>
+    <div class="flex-row">
+      <input type="range" id="particleSize" min="1" max="10" step="0.1">
+      <span>Particle size:</span><span id="particleSizeText"></span>
+    </div>
+    <div class="flex-row">
+      <input type="range" id="force" min="-5" max="5" step="0.1">
+      <span>Force:</span><span id="forceText"></span>
+    </div>
+    <div class="flex-row">
+      <input type="text" id="colorPicker" />
+    </div>
+    <div class="flex-row">
+      <button id="btnSetDefault">Set default values</button>
+    </div>
+    <div class="flex-row">
+      <hr>
+    </div>
+    <div class="flex-row">
+      <span style="color: red;">Controls:</span>
+    </div>
+
+    <div class="flex-row">
+      <span class="label">Left Mouse Button:</span> <span>Scene rotation</span>
+    </div>
+
+    <div class="flex-row">
+      <span class="label">Mouse Wheel:</span> <span>Zoom in/out</span>
+    </div>
+
+    <div class="flex-row">
+      <span class="label">Space:</span> <span>Activate force</span>
+    </div>
+
+    <div class="flex-row">
+      <span class="label">F11:</span> <span>Toggle fullscreen</span>
+    </div>
+
+    <div class="flex-row">
+      <span class="label">W:</span> <span style="color: #0000ff;">Move Force -Z</span>
+    </div>
+
+    <div class="flex-row">
+      <span class="label">A:</span> <span style="color: #ff0000;">Move Force -X</span>
+    </div>
+
+    <div class="flex-row">
+      <span class="label">S:</span> <span style="color: #0000ff;">Move Force +Z</span>
+    </div>
+
+    <div class="flex-row">
+      <span class="label">D:</span> <span style="color: #ff0000;">Move Force +X</span>
+    </div>
+
+    <div class="flex-row">
+      <span class="label">Page Up:</span> <span style="color: #00ff00;">Move Force +Y</span>
+    </div>
+
+    <div class="flex-row">
+      <span class="label">Page Down:</span> <span style="color: #00ff00;">Move Force -Y</span>
+    </div>
+
+    <div class="flex-row">
+      <hr>
+    </div>
+    <div class="flex-row">
+      <span style="color: red;">Stats:</span>
+    </div>
+
+    <div class="flex-row">
+      <span class="label">Frame time ms/frame:</span><span id="perf"></span>
+    </div>
+
+    <div class="flex-row">
+      <span class="label">Particle count:</span><span id="totalParticle"></span>
+    </div>
+  </div>
+</body>
+
+</html>

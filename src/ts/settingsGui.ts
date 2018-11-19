@@ -1,6 +1,6 @@
 import * as $ from 'jquery';
 import * as THREE from 'three';
-import * as  tinycolor from 'tinycolor2';
+import * as tinycolor from 'tinycolor2';
 require('spectrum-colorpicker'); // tslint:disable-line:no-var-requires
 
 export interface ISettings {
@@ -64,7 +64,7 @@ export class SettingsGui {
       showAlpha: true,
       showButtons: false,
       showInitial: false,
-      showInput: false,
+      showInput: false
     });
 
     this._settingsButton.on('click', () => {
@@ -107,6 +107,10 @@ export class SettingsGui {
     return this._settings;
   }
 
+  public updateFrames(delta: number) {
+    this._perf.html(delta.toFixed(2));
+  }
+
   private setDefault(): void {
     if (!this._settings) {
       this._settings = {
@@ -128,7 +132,6 @@ export class SettingsGui {
       this._settings.particlesPerDimension = 10;
     }
 
-
     this.updateGUI();
   }
 
@@ -147,7 +150,5 @@ export class SettingsGui {
     this._forceText.html(this._settings.force.toString());
 
     this._colorPicker.spectrum('set', this._settings.color.toHexString());
-
   }
-
 }

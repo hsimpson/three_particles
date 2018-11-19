@@ -50,6 +50,14 @@ const config = {
       noparse: true,
       path: './node_modules/three/examples/js/lines/LineMaterial.js'
     }, {
+      expose: 'THREE.WireframeGeometry2',
+      noparse: true,
+      path: './node_modules/three/examples/js/lines/WireframeGeometry2.js'
+    }, {
+      expose: 'THREE.Wireframe',
+      noparse: true,
+      path: './node_modules/three/examples/js/lines/Wireframe.js'
+    }, {
       expose: 'THREE.TrackballControls',
       noparse: true,
       path: './node_modules/three/examples/js/controls/TrackballControls.js'

@@ -1,3 +1,3 @@
 # three_particles
 
-Calculation particles with different approaches and rendering with [three.js](https://threejs.org/)
+Calculation of particles on GPU and rendering with [three.js](https://threejs.org/)

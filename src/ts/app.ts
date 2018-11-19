@@ -4,7 +4,6 @@ import * as $ from 'jquery';
 import { ParticleEngine } from './particleEngine';
 
 document.addEventListener('DOMContentLoaded', () => {
-
   // We are only using the user-astronaut icon
   library.add(faBars, faTimesCircle);
 

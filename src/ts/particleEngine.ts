@@ -26,7 +26,7 @@ export class ParticleEngine {
   private _boundingBox: BoundingBox;
   private _crossHair: CrossHair;
   private _controls: THREE.TrackballControls;
-  private _clock: THREE.Clock;
+  private _elapsed: number = 0;
 
   constructor(canvasId: string) {
     this._canvas = document.getElementById(canvasId) as HTMLCanvasElement;
@@ -71,7 +71,7 @@ export class ParticleEngine {
 
     this._camera.position.z = 10;
 
-    this._controls = new THREE.TrackballControls(this._camera);
+    this._controls = new THREE.TrackballControls(this._camera, this._canvas);
     this._controls.rotateSpeed = 2.5;
     this._controls.zoomSpeed = 2.5;
     this._controls.panSpeed = 0.8;
@@ -81,8 +81,6 @@ export class ParticleEngine {
     this._controls.dynamicDampingFactor = 0.3;
     this._controls.keys = [65, 83, 68];
     // this._controls.addEventListener('change', render);
-
-    this._clock = new THREE.Clock();
   }
 
   public startRender(): void {
@@ -107,9 +105,14 @@ export class ParticleEngine {
     window.requestAnimationFrame(() => {
       this.animate();
     });
+
+    const now = window.performance.now();
+    const delta = now - this._elapsed;
+    this._elapsed = now;
+
     this._controls.update();
     this._crossHair.update();
-    this._settingsGui.updateFrames(this._clock.getDelta());
+    this._settingsGui.updateFrames(delta);
     this._renderer.render(this._scene, this._camera);
   }
 }

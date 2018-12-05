@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { ISettings } from './settingsGui';
-import { debug } from 'util';
 
 require('THREE.LineMaterial'); // tslint:disable-line:no-var-requires
 require('THREE.LineSegmentsGeometry'); // tslint:disable-line:no-var-requires

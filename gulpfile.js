@@ -12,45 +12,48 @@ const concat = require('gulp-concat');
 
 const config = require('./gulp/config');
 
-
 function clean() {
   return del(config.distDirectory);
 }
 
 function buildHtml() {
-  return src(config.htmlSrc)
-    .pipe(dest(config.distDirectory));
+  return src(config.htmlSrc).pipe(dest(config.distDirectory));
+}
+
+function buildFonts() {
+  return src(config.fontSrc).pipe(dest(`${config.distDirectory}/fonts`));
 }
 
 function buildCss() {
   return src(config.cssSrc)
+    .pipe(concat('app.css'))
     .pipe(dest(`${config.distDirectory}/css`));
 }
 
 function buildTypeScript() {
-
   const b = browserify({
     debug: true,
     entries: ['src/ts/app.ts']
   }).plugin(tsify);
 
-
   config.thirdparty.scripts.forEach((external) => {
     b.external(external.expose);
   });
 
-  return b.bundle()
+  return b
+    .bundle()
     .pipe(source('app.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({
-      loadMaps: true
-    }))
+    .pipe(
+      sourcemaps.init({
+        loadMaps: true
+      })
+    )
     .pipe(sourcemaps.write())
     .pipe(dest(`${config.distDirectory}/js`));
 }
 
 function buildThirdpartyJS() {
-
   let noparse = [];
 
   config.thirdparty.scripts.forEach((external) => {
@@ -58,7 +61,6 @@ function buildThirdpartyJS() {
       noparse.push(external.path);
     }
   });
-
 
   const b = browserify({
     debug: true,
@@ -71,13 +73,15 @@ function buildThirdpartyJS() {
     });
   });
 
-
-  return b.bundle()
+  return b
+    .bundle()
     .pipe(source('thirdparty.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({
-      loadMaps: true
-    }))
+    .pipe(
+      sourcemaps.init({
+        loadMaps: true
+      })
+    )
     .pipe(sourcemaps.write())
     .pipe(dest(`${config.distDirectory}/js`));
 }
@@ -92,15 +96,16 @@ function watchHtml() {
   return watch(config.htmlSrc, buildHtml);
 }
 
+function watchFonts() {
+  return watch(config.fontSrc, buildFonts);
+}
+
 function watchCss() {
   return watch(config.cssSrc, buildCss);
 }
 
 function watchTypeScript() {
-  return watch([
-    config.typescriptSrc,
-    'tsconfig.json'
-  ], buildTypeScript);
+  return watch([config.typescriptSrc, 'tsconfig.json'], buildTypeScript);
 }
 
 function webServer() {
@@ -109,8 +114,8 @@ function webServer() {
   });
 }
 
-const build = parallel(buildHtml, buildCss, buildTypeScript, buildThirdpartyJS, buildThirdpartyCss);
+const build = parallel(buildHtml, buildFonts, buildCss, buildTypeScript, buildThirdpartyJS, buildThirdpartyCss);
 const defaultTask = series(clean, build);
 
 exports.default = defaultTask;
-exports.develop = series(defaultTask, parallel(webServer, watchHtml, watchCss, watchTypeScript));
+exports.develop = series(defaultTask, parallel(webServer, watchHtml, watchFonts, watchCss, watchTypeScript));

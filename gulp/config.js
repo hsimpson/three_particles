@@ -24,13 +24,9 @@ const config = {
         path: './node_modules/jquery/dist/jquery.min.js'
       },
       {
-        expose: 'spectrum-colorpicker',
+        expose: 'vanilla-picker',
         noparse: true,
-        path: './node_modules/spectrum-colorpicker/spectrum.js'
-      },
-      {
-        expose: 'tinycolor2',
-        path: './node_modules/tinycolor2/dist/tinycolor-min.js'
+        path: './node_modules/vanilla-picker/dist/vanilla-picker.js'
       },
       {
         expose: 'three',
@@ -78,10 +74,7 @@ const config = {
         path: './node_modules/three/examples/js/controls/TrackballControls.js'
       }
     ],
-    styles: [
-      './node_modules/spectrum-colorpicker/spectrum.css',
-      './node_modules/spectrum-colorpicker/themes/sp-dark.css'
-    ]
+    styles: []
   }
 };
 

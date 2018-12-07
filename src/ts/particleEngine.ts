@@ -11,6 +11,7 @@ window.THREE = THREE;
 
 import { BoundingBox } from './boundingBox';
 import { CrossHair } from './crossHair';
+import { ParticleRenderer } from './particleRenderer';
 import { SettingsGui } from './settingsGui';
 
 require('THREE.TrackballControls'); // tslint:disable-line:no-var-requires
@@ -27,6 +28,7 @@ export class ParticleEngine {
   private _crossHair: CrossHair;
   private _controls: THREE.TrackballControls;
   private _elapsed: number = 0;
+  private _particleRender: ParticleRenderer;
 
   constructor(canvasId: string) {
     this._canvas = document.getElementById(canvasId) as HTMLCanvasElement;
@@ -81,6 +83,8 @@ export class ParticleEngine {
     this._controls.dynamicDampingFactor = 0.3;
     this._controls.keys = [65, 83, 68];
     // this._controls.addEventListener('change', render);
+
+    this._particleRender = new ParticleRenderer(this._scene, this._settingsGui.getSettings());
   }
 
   public startRender(): void {
@@ -113,6 +117,7 @@ export class ParticleEngine {
     this._controls.update();
     this._crossHair.update();
     this._settingsGui.updateFrames(delta);
+    this._particleRender.update();
     this._renderer.render(this._scene, this._camera);
   }
 }

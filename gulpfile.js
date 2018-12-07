@@ -86,11 +86,13 @@ function buildThirdpartyJS() {
     .pipe(dest(`${config.distDirectory}/js`));
 }
 
+/*
 function buildThirdpartyCss() {
   return src(config.thirdparty.styles)
     .pipe(concat('thirdparty.css'))
     .pipe(dest(`${config.distDirectory}/css`));
 }
+*/
 
 function watchHtml() {
   return watch(config.htmlSrc, buildHtml);
@@ -114,7 +116,7 @@ function webServer() {
   });
 }
 
-const build = parallel(buildHtml, buildFonts, buildCss, buildTypeScript, buildThirdpartyJS, buildThirdpartyCss);
+const build = parallel(buildHtml, buildFonts, buildCss, buildTypeScript, buildThirdpartyJS /*, buildThirdpartyCss*/);
 const defaultTask = series(clean, build);
 
 exports.default = defaultTask;

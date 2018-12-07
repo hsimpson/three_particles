@@ -1,7 +1,7 @@
 import * as $ from 'jquery';
 import * as THREE from 'three';
-import * as tinycolor from 'tinycolor2';
-require('spectrum-colorpicker'); // tslint:disable-line:no-var-requires
+
+const Picker = require('vanilla-picker'); // tslint:disable-line:no-var-requires variable-name
 
 export interface ISettings {
   particlesPerDimension: number;
@@ -10,7 +10,7 @@ export interface ISettings {
   force: number;
   forceActive: boolean;
   forcePosition?: THREE.Vector3;
-  color: tinycolor.Instance;
+  color: THREE.Vector4;
 }
 
 export class SettingsGui {
@@ -29,7 +29,7 @@ export class SettingsGui {
   private _forceSlider: JQuery<HTMLInputElement>;
   private _forceText: JQuery<HTMLElement>;
 
-  private _colorPicker: JQuery<HTMLInputElement>;
+  private _colorPicker: any;
   private _perf: JQuery<HTMLElement>;
   private _totalParticle: JQuery<HTMLElement>;
   private _settings: ISettings;
@@ -50,21 +50,21 @@ export class SettingsGui {
     this._forceSlider = this._settingsPanel.find('#force') as JQuery<HTMLInputElement>;
     this._forceText = this._settingsPanel.find('#forceText');
 
-    this._colorPicker = this._settingsPanel.find('#colorPicker') as JQuery<HTMLInputElement>;
     this._perf = this._settingsPanel.find('#perf');
     this._totalParticle = this._settingsPanel.find('#totalParticle');
 
-    this._colorPicker.spectrum({
-      containerClassName: 'colorpicker',
-      flat: true,
-      move: (color) => {
-        this._settings.color = color;
-      },
-      preferredFormat: 'rgb',
-      showAlpha: true,
-      showButtons: false,
-      showInitial: false,
-      showInput: false
+    this._colorPicker = new Picker({
+      parent: this._settingsPanel.find('#colorPicker')[0],
+      popup: false,
+      alpha: true,
+      editor: false,
+      color: '#ff0000',
+      onChange: (color) => {
+        const rgba = color.rgba;
+        if (this._settings) {
+          this._settings.color.set(rgba[0] / 255, rgba[1] / 255, rgba[2] / 255, rgba[3]);
+        }
+      }
     });
 
     this._settingsButton.on('click', () => {
@@ -108,13 +108,13 @@ export class SettingsGui {
   }
 
   public updateFrames(delta: number) {
-    this._perf.html(delta.toFixed(2));
+    this._perf.html(`${delta.toFixed(2)} (${(1000 / delta).toFixed(1)} FPS)`);
   }
 
   private setDefault(): void {
     if (!this._settings) {
       this._settings = {
-        color: tinycolor({ r: 255, g: 0, b: 0, a: 1.0 }),
+        color: new THREE.Vector4(1.0, 0.0, 0.0, 1.0),
         force: 0.1,
         forceActive: false,
         forcePosition: new THREE.Vector3(),
@@ -123,7 +123,7 @@ export class SettingsGui {
         particlesPerDimension: 10
       };
     } else {
-      this._settings.color = tinycolor({ r: 255, g: 0, b: 0, a: 1.0 });
+      this._settings.color.set(1.0, 0.0, 0.0, 1.0);
       this._settings.force = 0.1;
       this._settings.forceActive = false;
       this._settings.forcePosition.set(0, 0, 0);
@@ -149,6 +149,11 @@ export class SettingsGui {
     this._forceSlider.val(this._settings.force);
     this._forceText.html(this._settings.force.toString());
 
-    this._colorPicker.spectrum('set', this._settings.color.toHexString());
+    const rgba = this._settings.color.toArray();
+    rgba[0] *= 255;
+    rgba[1] *= 255;
+    rgba[2] *= 255;
+
+    this._colorPicker.setColor(rgba, true);
   }
 }

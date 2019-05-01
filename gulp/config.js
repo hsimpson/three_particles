@@ -6,6 +6,7 @@ const config = {
   cssSrc: 'src/css/*.css',
   fontSrc: 'src/fonts/*',
   typescriptSrc: 'src/ts/**/*.ts',
+  shaderSrc: 'src/shaders/**/*.{comp, vert, frag}',
   thirdparty: {
     scripts: [
       {
@@ -31,7 +32,8 @@ const config = {
       {
         expose: 'three',
         noparse: true,
-        path: './node_modules/three/build/three.js'
+        //path: './node_modules/three/build/three.js'
+        path: './libs/three.js'
       },
       {
         expose: 'THREE.LineSegments2',

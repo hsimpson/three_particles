@@ -28,10 +28,10 @@ input[type='range']:focus {
   outline: none;
 }
 
-#noWebGL2 {
+#noWebGL2WithCompute {
   padding: 20px;
   color: #ff0000;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
 }
 

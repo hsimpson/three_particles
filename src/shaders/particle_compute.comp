@@ -1,0 +1,120 @@
+#version 310 es
+// particle compute shader
+
+layout(local_size_x = 1024, local_size_y = 1, local_size_z = 1) in;
+
+layout(std430, binding = 0) buffer Pos {
+  vec4 positions[];
+}
+pos;
+
+layout(std430, binding = 1) buffer Vel {
+  vec4 velocities[];
+}
+vel;
+
+uniform uint uiInit;
+uniform uint uiParticleCount;
+uniform vec3  v3BoundingBox;
+uniform float fDeltaTime;
+uniform float fGravity;
+uniform uint uiForce;
+uniform vec3  v3ForcePostion;
+uniform float fForce;
+
+void init(uint threadIndex) {
+  // calc the cubic root of particle count
+
+  float n = pow(float(uiParticleCount), (1.0 / 3.0));
+
+  uint  uiN          = uint(n);
+  float fthreadIndex = float(threadIndex);
+
+  float dx = v3BoundingBox.x / (n + 1.0);
+  float dy = v3BoundingBox.y / (n + 1.0);
+  float dz = v3BoundingBox.z / (n + 1.0);
+
+  uint modX = threadIndex % uiN;
+  uint modY = (threadIndex / uiN) % uiN;
+  uint modZ = (threadIndex / (uiN * uiN)) % uiN;
+
+  float px = float(modX) * dx + dx - (v3BoundingBox.x / 2.0);
+  float py = float(modY) * dy + dy - (v3BoundingBox.y / 2.0);
+  float pz = float(modZ) * dz + dz - (v3BoundingBox.z / 2.0);
+
+  // Semi-random velocities
+  float vx = cos(1234.0 * fthreadIndex);
+  float vy = sin(1234.0 * fthreadIndex);
+  float vz = cos(1234.0 * fthreadIndex);
+
+  // Save position and velocity
+  pos.positions[threadIndex].x = px;
+  pos.positions[threadIndex].y = py;
+  pos.positions[threadIndex].z = pz;
+
+  vel.velocities[threadIndex].x = vx;
+  vel.velocities[threadIndex].y = vy;
+  vel.velocities[threadIndex].z = vz;
+}
+
+void main() {
+  uint threadIndex = gl_GlobalInvocationID.x;
+
+  if (uiInit == 1u) {
+    init(threadIndex);
+    return;
+  }
+
+  vec3 position = pos.positions[threadIndex].xyz;
+  vec3 velocity = vel.velocities[threadIndex].xyz;
+
+  // Update Particle positions
+  position += velocity * fDeltaTime;
+
+  // Add in fGravity
+  velocity.y -= fGravity * fDeltaTime;
+
+  vec3 v3BB_half = v3BoundingBox / 2.0;
+
+  // Edge Collision Detection
+  if (position.x < -v3BB_half.x) {  // LEFT
+    position.x = -2.0 * v3BB_half.x - position.x;
+    velocity.x *= -0.9;
+  } else if (position.x > v3BB_half.x) {  // RIGHT
+    position.x = 2.0 * v3BB_half.x - position.x;
+    velocity.x *= -0.9;
+  }
+
+  if (position.y < -v3BB_half.y) {  // BOTTOM
+    position.y = -2.0 * v3BB_half.y - position.y;
+    velocity.y *= -0.45;  // if its on the bottom we extra dampen
+    velocity.x *= 0.9;
+  } else if (position.y > v3BB_half.y) {  // TOP
+    position.y = 2.0 * v3BB_half.y - position.y;
+    velocity.y *= -0.9;
+  }
+
+  if (position.z < -v3BB_half.z) {  // FRONT
+    position.z = -2.0 * v3BB_half.z - position.z;
+    velocity.z *= -0.9;
+  } else if (position.z > v3BB_half.z) {  // BACK
+    position.z = 2.0 * v3BB_half.z - position.z;
+    velocity.z *= -0.9;
+  }
+
+  // include force
+  if (uiForce != 0u) {
+    vec3  d    = v3ForcePostion - position;
+    float dist = sqrt(d.x * d.x + d.y * d.y + d.z * d.z);
+    if (dist < 1.0) {
+      dist = 1.0;  // This line prevents anything that is really close from
+                   // getting a huge force
+    }
+
+    velocity = d / dist * fForce / dist;
+  }
+
+  // update the arrays with our newly computed values
+  pos.positions[threadIndex].xyz  = position;
+  vel.velocities[threadIndex].xyz = velocity;
+}

@@ -9,6 +9,7 @@ const tsify = require('tsify');
 const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const concat = require('gulp-concat');
+const stringify = require('stringify');
 
 const config = require('./gulp/config');
 
@@ -34,7 +35,13 @@ function buildTypeScript() {
   const b = browserify({
     debug: true,
     entries: ['src/ts/app.ts']
-  }).plugin(tsify);
+  })
+    .plugin(tsify)
+    .transform(stringify, {
+      appliesTo: {
+        includeExtensions: ['.comp', '.vert', '.frag']
+      }
+    });
 
   config.thirdparty.scripts.forEach((external) => {
     b.external(external.expose);
@@ -107,7 +114,7 @@ function watchCss() {
 }
 
 function watchTypeScript() {
-  return watch([config.typescriptSrc, 'tsconfig.json'], buildTypeScript);
+  return watch([config.typescriptSrc, 'tsconfig.json', config.shaderSrc], buildTypeScript);
 }
 
 function webServer() {

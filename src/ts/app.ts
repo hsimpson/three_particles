@@ -13,14 +13,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const engine = new ParticleEngine('renderCanvas');
 
-  if (!engine.supportsWebGL2()) {
-    const hintUrl = 'https://caniuse.com/#feat=webgl2';
-    $(document.body).html(`<p id="noWebGL2">Your browser does not support <a href="${hintUrl}">WebGL 2.0</a></p>`);
+  if (!engine.supportsWebGL2WithCompute()) {
+    const webgl2ComputeSpec = 'https://www.khronos.org/registry/webgl/specs/latest/2.0-compute/';
+    const googleGroupUrl = 'https://groups.google.com/a/chromium.org/d/topic/blink-dev/bPD47wqY-r8/discussion';
+
+    $(document.body).html(`
+      <div id="noWebGL2WithCompute">
+        Your browser does not support WebGL 2.0 Compute Shader<br>
+        You need a browser like Chrome Canary or Edge Canary<br>
+        Additional information:<br>
+        <ul>
+          <li><a href="${webgl2ComputeSpec}">WebGL 2.0 Compute Specification</a></li>
+          <li><a href="${googleGroupUrl}">Google Groups discussion</a></li>
+        </ul>
+      </div>
+    `);
   }
 
   // Create the scene
-  engine.createScene();
-
-  // start rendering
-  engine.startRender();
+  if (engine.createScene()) {
+    // start rendering
+    engine.startRender();
+  }
 });

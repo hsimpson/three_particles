@@ -18,11 +18,12 @@ require('THREE.TrackballControls'); // tslint:disable-line:no-var-requires
 
 export class ParticleEngine {
   private _canvas: HTMLCanvasElement;
-  private _gl: WebGL2RenderingContext;
+  private _gl: WebGL2ComputeRenderingContext;
   private _settingsGui: SettingsGui;
   private _scene: THREE.Scene;
   private _camera: THREE.PerspectiveCamera;
   private _renderer: THREE.WebGLRenderer;
+  //private readonly _boundingBoxDimension = new THREE.Vector3(4.0, 4.0, 4.0);
   private readonly _boundingBoxDimension = new THREE.Vector3(8.0, 5.0, 5.0);
   private _boundingBox: BoundingBox;
   private _crossHair: CrossHair;
@@ -32,16 +33,18 @@ export class ParticleEngine {
 
   constructor(canvasId: string) {
     this._canvas = document.getElementById(canvasId) as HTMLCanvasElement;
-    this._gl = this._canvas.getContext('webgl2', {
+    // const contexName = 'webgl2';
+    const contexName = 'webgl2-compute';
+    this._gl = this._canvas.getContext(contexName, {
       antialias: true
     });
   }
 
-  public supportsWebGL2(): boolean {
+  public supportsWebGL2WithCompute(): boolean {
     return this._gl ? true : false;
   }
 
-  public createScene(): void {
+  public createScene(): boolean {
     this._settingsGui = new SettingsGui();
 
     const w = this._canvas.clientWidth;
@@ -84,7 +87,13 @@ export class ParticleEngine {
     this._controls.keys = [65, 83, 68];
     // this._controls.addEventListener('change', render);
 
-    this._particleRender = new ParticleRenderer(this._scene, this._settingsGui.getSettings());
+    this._particleRender = new ParticleRenderer(
+      this._gl,
+      this._camera,
+      this._settingsGui.getSettings(),
+      this._boundingBoxDimension
+    );
+    return this._particleRender.init();
   }
 
   public startRender(): void {
@@ -93,7 +102,7 @@ export class ParticleEngine {
       const h = this._canvas.clientHeight;
       this.resize(w, h);
     });
-    this.animate();
+    this.animate(0);
   }
 
   private resize(w: number, h: number): void {
@@ -105,9 +114,9 @@ export class ParticleEngine {
     this._crossHair.resize(w, h);
   }
 
-  private animate(): void {
-    window.requestAnimationFrame(() => {
-      this.animate();
+  private animate(time: number): void {
+    window.requestAnimationFrame((time: number) => {
+      this.animate(time);
     });
 
     const now = window.performance.now();
@@ -117,7 +126,10 @@ export class ParticleEngine {
     this._controls.update();
     this._crossHair.update();
     this._settingsGui.updateFrames(delta);
-    this._particleRender.update();
+
     this._renderer.render(this._scene, this._camera);
+
+    this._particleRender.update(time / 1000);
+    this._renderer.state.reset();
   }
 }

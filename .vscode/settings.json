@@ -5,6 +5,7 @@
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "files.associations": {
+    ".clang-format": "yaml",
     ".htmlhintrc": "json",
     ".prettierrc": "json",
     ".stylelintrc": "json"

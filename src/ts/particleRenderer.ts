@@ -137,6 +137,7 @@ export class ParticleRenderer {
 
   public update(time: number): void {
     const duration = time - this._lastTime;
+    //console.log(`duration: ${duration}`);
     this._lastTime = time;
 
     const runmode = this._resizeBuffers() ? 1 : 0;

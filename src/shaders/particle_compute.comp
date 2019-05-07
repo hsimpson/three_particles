@@ -111,7 +111,7 @@ void main() {
                    // getting a huge force
     }
 
-    velocity = d / dist * fForce / dist;
+    velocity += d / dist * fForce / dist;
   }
 
   // update the arrays with our newly computed values

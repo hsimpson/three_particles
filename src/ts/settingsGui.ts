@@ -120,7 +120,7 @@ export class SettingsGui {
         forcePosition: new THREE.Vector3(),
         gravity: 0.98,
         particleSize: 1.0,
-        particlesPerDimension: 10
+        particlesPerDimension: 50
       };
     } else {
       this._settings.color.set(1.0, 0.0, 0.0, 1.0);
@@ -129,7 +129,7 @@ export class SettingsGui {
       this._settings.forcePosition.set(0, 0, 0);
       this._settings.gravity = 0.98;
       this._settings.particleSize = 1.0;
-      this._settings.particlesPerDimension = 10;
+      this._settings.particlesPerDimension = 50;
     }
 
     this.updateGUI();

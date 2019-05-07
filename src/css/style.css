@@ -12,6 +12,13 @@ body {
   background-color: #000000;
 }
 
+code {
+  background: #3e3e3e;
+  border-radius: 3px;
+  padding: 0.2em 0.3em;
+  font-family: Consolas, Courier, monospace;
+}
+
 input[type='range'] {
   -webkit-appearance: none;
   background: #1d2e48;
@@ -31,8 +38,9 @@ input[type='range']:focus {
 #noWebGL2WithCompute {
   padding: 20px;
   color: #ff0000;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
+  line-height: 1.5;
 }
 
 #renderCanvas {

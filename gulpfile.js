@@ -10,6 +10,8 @@ const source = require('vinyl-source-stream');
 const buffer = require('vinyl-buffer');
 const concat = require('gulp-concat');
 const stringify = require('stringify');
+const cleanCSS = require('gulp-clean-css');
+const terser = require('gulp-terser');
 
 const config = require('./gulp/config');
 
@@ -27,7 +29,10 @@ function buildFonts() {
 
 function buildCss() {
   return src(config.cssSrc)
+    .pipe(sourcemaps.init())
     .pipe(concat('app.css'))
+    .pipe(cleanCSS())
+    .pipe(sourcemaps.write('./'))
     .pipe(dest(`${config.distDirectory}/css`));
 }
 
@@ -56,7 +61,8 @@ function buildTypeScript() {
         loadMaps: true
       })
     )
-    .pipe(sourcemaps.write())
+    .pipe(terser())
+    .pipe(sourcemaps.write('./'))
     .pipe(dest(`${config.distDirectory}/js`));
 }
 
@@ -89,7 +95,8 @@ function buildThirdpartyJS() {
         loadMaps: true
       })
     )
-    .pipe(sourcemaps.write())
+    .pipe(terser())
+    .pipe(sourcemaps.write('./'))
     .pipe(dest(`${config.distDirectory}/js`));
 }
 

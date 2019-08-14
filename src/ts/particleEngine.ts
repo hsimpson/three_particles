@@ -1,7 +1,8 @@
 // declare THREE as global available
 declare global {
-  // tslint:disable-next-line: interface-name
+  // eslint-disable-next-line @typescript-eslint/interface-name-prefix
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     THREE: any;
   }
 }
@@ -14,7 +15,7 @@ import { CrossHair } from './crossHair';
 import { ParticleRenderer } from './particleRenderer';
 import { SettingsGui } from './settingsGui';
 
-require('THREE.TrackballControls'); // tslint:disable-line:no-var-requires
+require('THREE.TrackballControls');
 
 export class ParticleEngine {
   private _canvas: HTMLCanvasElement;
@@ -28,7 +29,7 @@ export class ParticleEngine {
   private _boundingBox: BoundingBox;
   private _crossHair: CrossHair;
   private _controls: THREE.TrackballControls;
-  private _elapsed: number = 0;
+  private _elapsed = 0;
   private _particleRender: ParticleRenderer;
 
   constructor(canvasId: string) {
@@ -36,7 +37,7 @@ export class ParticleEngine {
     // const contexName = 'webgl2';
     const contexName = 'webgl2-compute';
     this._gl = this._canvas.getContext(contexName, {
-      antialias: true
+      antialias: true,
     });
   }
 
@@ -54,7 +55,7 @@ export class ParticleEngine {
     this._camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
     this._renderer = new THREE.WebGLRenderer({
       canvas: this._canvas,
-      context: this._gl
+      context: this._gl,
     });
 
     this._renderer.setPixelRatio(window.devicePixelRatio);

@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
-require('THREE.LineMaterial'); // tslint:disable-line:no-var-requires
-require('THREE.LineSegmentsGeometry'); // tslint:disable-line:no-var-requires
-require('THREE.WireframeGeometry2'); // tslint:disable-line:no-var-requires
-require('THREE.Wireframe'); // tslint:disable-line:no-var-requires
+require('THREE.LineMaterial');
+require('THREE.LineSegmentsGeometry');
+require('THREE.WireframeGeometry2');
+require('THREE.Wireframe');
 
 /* the cube:
 
@@ -42,7 +42,7 @@ export class BoundingBox {
 
     this._lineMaterial = new THREE.LineMaterial({
       color: 0xffffff,
-      linewidth: 3.0
+      linewidth: 3.0,
     });
 
     const lineGeometry = new THREE.LineGeometry();

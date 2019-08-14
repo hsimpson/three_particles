@@ -1,6 +1,6 @@
+import * as $ from 'jquery';
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import { faBars, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
-import * as $ from 'jquery';
 import { ParticleEngine } from './particleEngine';
 
 document.addEventListener('DOMContentLoaded', () => {

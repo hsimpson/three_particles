@@ -1,7 +1,9 @@
 import * as $ from 'jquery';
 import * as THREE from 'three';
 
-const Picker = require('vanilla-picker'); // tslint:disable-line:no-var-requires variable-name
+//import Picker from 'vanilla-picker';
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
+const Picker = require('vanilla-picker');
 
 export interface ISettings {
   particlesPerDimension: number;
@@ -29,6 +31,7 @@ export class SettingsGui {
   private _forceSlider: JQuery<HTMLInputElement>;
   private _forceText: JQuery<HTMLElement>;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _colorPicker: any;
   private _perf: JQuery<HTMLElement>;
   private _totalParticle: JQuery<HTMLElement>;
@@ -59,12 +62,12 @@ export class SettingsGui {
       alpha: true,
       editor: false,
       color: '#ff0000',
-      onChange: (color) => {
+      onChange: (color): void => {
         const rgba = color.rgba;
         if (this._settings) {
           this._settings.color.set(rgba[0] / 255, rgba[1] / 255, rgba[2] / 255, rgba[3]);
         }
-      }
+      },
     });
 
     this._settingsButton.on('click', () => {
@@ -107,7 +110,7 @@ export class SettingsGui {
     return this._settings;
   }
 
-  public updateFrames(delta: number) {
+  public updateFrames(delta: number): void {
     this._perf.html(`${delta.toFixed(2)} (${(1000 / delta).toFixed(1)} FPS)`);
   }
 
@@ -120,7 +123,7 @@ export class SettingsGui {
         forcePosition: new THREE.Vector3(),
         gravity: 0.98,
         particleSize: 1.0,
-        particlesPerDimension: 50
+        particlesPerDimension: 50,
       };
     } else {
       this._settings.color.set(1.0, 0.0, 0.0, 1.0);

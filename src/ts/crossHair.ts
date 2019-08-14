@@ -1,24 +1,24 @@
 import * as THREE from 'three';
 import { ISettings } from './settingsGui';
 
-require('THREE.LineMaterial'); // tslint:disable-line:no-var-requires
-require('THREE.LineSegmentsGeometry'); // tslint:disable-line:no-var-requires
-require('THREE.LineGeometry'); // tslint:disable-line:no-var-requires
-require('THREE.LineSegments2'); // tslint:disable-line:no-var-requires
-require('THREE.Line2'); // tslint:disable-line:no-var-requires
+require('THREE.LineMaterial');
+require('THREE.LineSegmentsGeometry');
+require('THREE.LineGeometry');
+require('THREE.LineSegments2');
+require('THREE.Line2');
 
 export class CrossHair {
   private _crossHair: THREE.Object3D;
   private _halfBounding: THREE.Vector3;
   private _negativeHalfBounding: THREE.Vector3;
 
-  private _leftPressed: boolean = false;
-  private _rightPressed: boolean = false;
-  private _forwardPressed: boolean = false;
-  private _backPressed: boolean = false;
-  private _upPressed: boolean = false;
-  private _downPressed: boolean = false;
-  private _movementSpeed: number = 0.1;
+  private _leftPressed = false;
+  private _rightPressed = false;
+  private _forwardPressed = false;
+  private _backPressed = false;
+  private _upPressed = false;
+  private _downPressed = false;
+  private _movementSpeed = 0.1;
   private _settingsObject: ISettings;
 
   private _xAxisMat: THREE.LineMaterial;
@@ -42,15 +42,15 @@ export class CrossHair {
 
     this._xAxisMat = new THREE.LineMaterial({
       color: 0xff0000,
-      linewidth: 2.0
+      linewidth: 2.0,
     });
     this._yAxisMat = new THREE.LineMaterial({
       color: 0x00ff00,
-      linewidth: 2.0
+      linewidth: 2.0,
     });
     this._zAxisMat = new THREE.LineMaterial({
       color: 0x0000ff,
-      linewidth: 2.0
+      linewidth: 2.0,
     });
 
     this.resize(w, h);

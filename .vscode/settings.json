@@ -1,19 +1,36 @@
 {
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "clang-format.executable": "${workspaceRoot}/node_modules/.bin/clang-format",
   "clang-format.language.javascript.enable": false,
   "clang-format.language.typescript.enable": false,
   "editor.formatOnSave": true,
+  "editor.minimap.enabled": false,
   "editor.tabSize": 2,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "typescript",
+      "autoFix": true
+    }
+  ],
   "files.associations": {
     ".clang-format": "yaml",
     ".htmlhintrc": "json",
     ".prettierrc": "json",
     ".stylelintrc": "json"
   },
-  "typescript.tsdk": "node_modules\\typescript\\lib",
   "files.exclude": {
     "dist": true,
     "node_modules": true
   },
-  "editor.minimap.enabled": false
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }

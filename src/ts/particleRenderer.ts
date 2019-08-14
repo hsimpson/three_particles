@@ -6,7 +6,7 @@ export class ParticleRenderer {
   private _threeCamera: THREE.PerspectiveCamera;
   private _settingsObject: ISettings;
   private _boundingBox: THREE.Vector3;
-  private _particleCount: number = 0;
+  private _particleCount = 0;
   private _computeProgram: WebGLProgram;
 
   private _shadingProgram: WebGLProgram;
@@ -31,7 +31,7 @@ export class ParticleRenderer {
   private _posBuffer: WebGLBuffer;
   private _velBuffer: WebGLBuffer;
 
-  private _lastTime: number = 0;
+  private _lastTime = 0;
   private _dispatchGroups: number;
 
   constructor(

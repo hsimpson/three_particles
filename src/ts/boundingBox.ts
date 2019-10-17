@@ -1,9 +1,7 @@
 import * as THREE from 'three';
-
-require('THREE.LineMaterial');
-require('THREE.LineSegmentsGeometry');
-require('THREE.WireframeGeometry2');
-require('THREE.Wireframe');
+import { Line2 } from 'three/examples/jsm/lines/Line2';
+import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry';
+import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial';
 
 /* the cube:
 
@@ -21,7 +19,7 @@ require('THREE.Wireframe');
 */
 
 export class BoundingBox {
-  private _lineMaterial: THREE.LineMaterial;
+  private _lineMaterial: LineMaterial;
 
   constructor(dimensions: THREE.Vector3, scene: THREE.Scene, w: number, h: number) {
     const halfX = dimensions.x / 2.0;
@@ -40,12 +38,12 @@ export class BoundingBox {
     const v6 = new THREE.Vector3(halfX, halfY, -halfZ);
     const v7 = new THREE.Vector3(halfX, -halfY, -halfZ);
 
-    this._lineMaterial = new THREE.LineMaterial({
+    this._lineMaterial = new LineMaterial({
       color: 0xffffff,
       linewidth: 3.0,
     });
 
-    const lineGeometry = new THREE.LineGeometry();
+    const lineGeometry = new LineGeometry();
 
     // prettier-ignore
     const positions = [
@@ -75,7 +73,7 @@ export class BoundingBox {
     ];
     lineGeometry.setPositions(positions);
 
-    const boxMesh = new THREE.Line2(lineGeometry, this._lineMaterial);
+    const boxMesh = new Line2(lineGeometry, this._lineMaterial);
     boxMesh.computeLineDistances();
 
     scene.add(boxMesh);

@@ -17,15 +17,22 @@
   "eslint.validate": [
     "javascript",
     "javascriptreact",
+    "typescript",
+    "typescriptreact",
     {
-      "language": "typescript",
-      "autoFix": true
+      "autoFix": true,
+      "language": "typescript"
+    },
+    {
+      "autoFix": true,
+      "language": "typescriptreact"
     }
   ],
   "files.associations": {
     ".clang-format": "yaml",
     ".htmlhintrc": "json",
     ".prettierrc": "json",
+    ".sasslintrc": "json",
     ".stylelintrc": "json"
   },
   "files.exclude": {

@@ -14,8 +14,7 @@ import { BoundingBox } from './boundingBox';
 import { CrossHair } from './crossHair';
 import { ParticleRenderer } from './particleRenderer';
 import { SettingsGui } from './settingsGui';
-
-require('THREE.TrackballControls');
+import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
 
 export class ParticleEngine {
   private _canvas: HTMLCanvasElement;
@@ -28,7 +27,7 @@ export class ParticleEngine {
   private readonly _boundingBoxDimension = new THREE.Vector3(8.0, 5.0, 5.0);
   private _boundingBox: BoundingBox;
   private _crossHair: CrossHair;
-  private _controls: THREE.TrackballControls;
+  private _controls: TrackballControls;
   private _elapsed = 0;
   private _particleRender: ParticleRenderer;
 
@@ -50,6 +49,8 @@ export class ParticleEngine {
 
     const w = this._canvas.clientWidth;
     const h = this._canvas.clientHeight;
+
+    console.log(`three.js revision: ${THREE.REVISION}`);
 
     this._scene = new THREE.Scene();
     this._camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
@@ -77,7 +78,7 @@ export class ParticleEngine {
 
     this._camera.position.z = 10;
 
-    this._controls = new THREE.TrackballControls(this._camera, this._canvas);
+    this._controls = new TrackballControls(this._camera, this._canvas);
     this._controls.rotateSpeed = 2.5;
     this._controls.zoomSpeed = 2.5;
     this._controls.panSpeed = 0.8;

@@ -1,5 +1,8 @@
 import * as THREE from 'three';
 import { ISettings } from './settingsGui';
+import computeShaderSource from '../shaders/particle_compute.comp';
+import particleFragmentShaderSource from '../shaders/particle.frag';
+import particleVertexShaderSource from '../shaders/particle.vert';
 
 export class ParticleRenderer {
   private _gl: WebGL2ComputeRenderingContext;
@@ -50,7 +53,6 @@ export class ParticleRenderer {
     this._logComputeThings();
 
     // create compute shader
-    const computeShaderSource = require('../shaders/particle_compute.comp');
     const computeShader = this._gl.createShader(this._gl.COMPUTE_SHADER);
     this._gl.shaderSource(computeShader, computeShaderSource);
     this._gl.compileShader(computeShader);
@@ -86,7 +88,6 @@ export class ParticleRenderer {
     this._velBuffer = this._gl.createBuffer();
 
     // create vertex shader
-    const particleVertexShaderSource = require('../shaders/particle.vert');
     const particleVertexShader = this._gl.createShader(this._gl.VERTEX_SHADER);
     this._gl.shaderSource(particleVertexShader, particleVertexShaderSource);
     this._gl.compileShader(particleVertexShader);
@@ -95,7 +96,6 @@ export class ParticleRenderer {
       return false;
     }
 
-    const particleFragmentShaderSource = require('../shaders/particle.frag');
     const particleFragmentShader = this._gl.createShader(this._gl.FRAGMENT_SHADER);
     this._gl.shaderSource(particleFragmentShader, particleFragmentShaderSource);
     this._gl.compileShader(particleFragmentShader);
@@ -221,6 +221,7 @@ export class ParticleRenderer {
     return false;
   }
 
+  /*
   private _randomInit(): Float32Array {
     const vertices = new Float32Array(this._particleCount * 4);
 
@@ -244,4 +245,5 @@ export class ParticleRenderer {
 
     return vertices;
   }
+  */
 }

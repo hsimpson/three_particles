@@ -1,11 +1,8 @@
 import * as THREE from 'three';
 import { ISettings } from './settingsGui';
-
-require('THREE.LineMaterial');
-require('THREE.LineSegmentsGeometry');
-require('THREE.LineGeometry');
-require('THREE.LineSegments2');
-require('THREE.Line2');
+import { Line2 } from 'three/examples/jsm/lines/Line2';
+import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry';
+import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial';
 
 export class CrossHair {
   private _crossHair: THREE.Object3D;
@@ -21,9 +18,9 @@ export class CrossHair {
   private _movementSpeed = 0.1;
   private _settingsObject: ISettings;
 
-  private _xAxisMat: THREE.LineMaterial;
-  private _yAxisMat: THREE.LineMaterial;
-  private _zAxisMat: THREE.LineMaterial;
+  private _xAxisMat: LineMaterial;
+  private _yAxisMat: LineMaterial;
+  private _zAxisMat: LineMaterial;
 
   constructor(
     dimensions: THREE.Vector3,
@@ -40,28 +37,28 @@ export class CrossHair {
     this._crossHair = new THREE.Object3D();
     scene.add(this._crossHair);
 
-    this._xAxisMat = new THREE.LineMaterial({
+    this._xAxisMat = new LineMaterial({
       color: 0xff0000,
       linewidth: 2.0,
     });
-    this._yAxisMat = new THREE.LineMaterial({
+    this._yAxisMat = new LineMaterial({
       color: 0x00ff00,
       linewidth: 2.0,
     });
-    this._zAxisMat = new THREE.LineMaterial({
+    this._zAxisMat = new LineMaterial({
       color: 0x0000ff,
       linewidth: 2.0,
     });
 
     this.resize(w, h);
 
-    const xAxisGeometry = new THREE.LineGeometry();
+    const xAxisGeometry = new LineGeometry();
     xAxisGeometry.setPositions([-dimensions.x / 2, 0.0, 0.0, dimensions.x / 2, 0.0, 0.0]);
 
-    const yAxisGeometry = new THREE.LineGeometry();
+    const yAxisGeometry = new LineGeometry();
     yAxisGeometry.setPositions([0.0, -dimensions.y / 2, 0.0, 0.0, dimensions.y / 2, 0.0]);
 
-    const zAxisGeometry = new THREE.LineGeometry();
+    const zAxisGeometry = new LineGeometry();
     zAxisGeometry.setPositions([0.0, 0.0, -dimensions.z / 2, 0.0, 0.0, dimensions.z / 2]);
 
     /*
@@ -70,9 +67,9 @@ export class CrossHair {
     xAxis.scale.set(1, 1, 1);
     */
 
-    this._crossHair.add(new THREE.Line2(xAxisGeometry, this._xAxisMat));
-    this._crossHair.add(new THREE.Line2(yAxisGeometry, this._yAxisMat));
-    this._crossHair.add(new THREE.Line2(zAxisGeometry, this._zAxisMat));
+    this._crossHair.add(new Line2(xAxisGeometry, this._xAxisMat));
+    this._crossHair.add(new Line2(yAxisGeometry, this._yAxisMat));
+    this._crossHair.add(new Line2(zAxisGeometry, this._zAxisMat));
 
     document.addEventListener('keydown', (event: KeyboardEvent) => {
       if (event.key === ' ') {

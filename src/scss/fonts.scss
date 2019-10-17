@@ -5,7 +5,9 @@
   font-family: 'Source Code Pro';
   font-style: normal;
   font-weight: 400;
-  src: local('Source Code Pro'), local('SourceCodePro-Regular'),
-    url('../fonts/source-code-pro-v8-latin-ext_latin-regular.woff2') format('woff2'),/* Chrome 26+, Opera 23+, Firefox 39+ */ 
+  src: local('Source Code Pro'), 
+  local('SourceCodePro-Regular'), 
+  url('../fonts/source-code-pro-v8-latin-ext_latin-regular.woff2') 
+  format('woff2'),/* Chrome 26+, Opera 23+, Firefox 39+ */ 
 }
 /* stylelint-enable */

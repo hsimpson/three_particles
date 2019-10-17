@@ -1,9 +1,8 @@
-import * as $ from 'jquery';
 import * as THREE from 'three';
-
-//import Picker from 'vanilla-picker';
+import $ from 'jquery';
+import Picker from 'vanilla-picker';
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
-const Picker = require('vanilla-picker');
+//const Picker = require('vanilla-picker');
 
 export interface ISettings {
   particlesPerDimension: number;

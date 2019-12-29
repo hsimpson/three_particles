@@ -26,6 +26,7 @@ const config: webpack.Configuration = {
             options: {
               name: '[name].[ext]',
               outputPath: 'fonts/',
+              publicPath: (url) => '../fonts/' + url,
             },
           },
         ],

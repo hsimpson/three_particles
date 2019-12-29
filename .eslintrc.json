@@ -1,9 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
   "env": {
     "node": true,
     "browser": true
@@ -12,7 +9,7 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    //"plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier",
     "prettier/@typescript-eslint"
   ],
@@ -21,7 +18,7 @@
     // note you must disable the base rule as it can report incorrect errors
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
-      "error",
+      "warn",
       {
         "vars": "all",
         "args": "after-used",
@@ -30,14 +27,18 @@
     ],
     "@typescript-eslint/no-require-imports": "warn",
     "@typescript-eslint/no-var-requires": "warn",
-    "@typescript-eslint/interface-name-prefix": ["warn", { "prefixWithI": "always" }],
+    "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/no-parameter-properties": ["off"],
     "@typescript-eslint/explicit-function-return-type": ["warn", { "allowExpressions": true }],
-    "indent": ["error", 2],
+    "@typescript-eslint/explicit-member-accessibility": [
+      "error",
+      { "accessibility": "explicit", "overrides": { "constructors": "no-public" } }
+    ],
+    "eqeqeq": "error",
+    "indent": ["error", 2, { "SwitchCase": 1 }],
     "linebreak-style": ["error", "unix"],
     "no-warning-comments": "warn",
     "quotes": ["error", "single"],
-    "semi": "error",
-    "sort-imports": "warn"
+    "semi": ["error", "always"]
   }
 }

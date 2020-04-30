@@ -55,7 +55,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-solid-svg-icons": "^5.12.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "three": "^0.112.1",
     "vanilla-picker": "^2.10.1"
   }

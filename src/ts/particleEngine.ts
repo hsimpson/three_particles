@@ -37,6 +37,13 @@ export class ParticleEngine {
     const contexName = 'webgl2-compute';
     this._gl = this._canvas.getContext(contexName, {
       antialias: true,
+      alpha: false,
+      depth: true,
+      premultipliedAlpha: true,
+      stencil: false,
+      preserveDrawingBuffer: false,
+      powerPreference: 'high-performance',
+      desynchronized: false,
     });
   }
 

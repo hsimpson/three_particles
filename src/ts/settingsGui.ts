@@ -19,21 +19,21 @@ export class SettingsGui {
   private _settingsButton: JQuery<HTMLElement>;
 
   private _particleCountSlider: JQuery<HTMLInputElement>;
-  private _particleCountText: JQuery<HTMLElement>;
+  private _particleCountText: JQuery<HTMLSpanElement>;
 
   private _gravitySlider: JQuery<HTMLInputElement>;
-  private _gravityText: JQuery<HTMLElement>;
+  private _gravityText: JQuery<HTMLSpanElement>;
 
   private _particleSizeSlider: JQuery<HTMLInputElement>;
-  private _particleSizeText: JQuery<HTMLElement>;
+  private _particleSizeText: JQuery<HTMLSpanElement>;
 
   private _forceSlider: JQuery<HTMLInputElement>;
-  private _forceText: JQuery<HTMLElement>;
+  private _forceText: JQuery<HTMLSpanElement>;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private _colorPicker: any;
-  private _perf: JQuery<HTMLElement>;
-  private _totalParticle: JQuery<HTMLElement>;
+  private _perf: JQuery<HTMLSpanElement>;
+  private _totalParticle: JQuery<HTMLSpanElement>;
   private _settings: ISettings;
 
   constructor() {
@@ -41,19 +41,19 @@ export class SettingsGui {
     this._settingsPanel = $('#settings');
 
     this._particleCountSlider = this._settingsPanel.find('#particleCount') as JQuery<HTMLInputElement>;
-    this._particleCountText = this._settingsPanel.find('#particleCountText');
+    this._particleCountText = this._settingsPanel.find('#particleCountText') as JQuery<HTMLSpanElement>;
 
     this._gravitySlider = this._settingsPanel.find('#gravity') as JQuery<HTMLInputElement>;
-    this._gravityText = this._settingsPanel.find('#gravityText');
+    this._gravityText = this._settingsPanel.find('#gravityText') as JQuery<HTMLSpanElement>;
 
     this._particleSizeSlider = this._settingsPanel.find('#particleSize') as JQuery<HTMLInputElement>;
-    this._particleSizeText = this._settingsPanel.find('#particleSizeText');
+    this._particleSizeText = this._settingsPanel.find('#particleSizeText') as JQuery<HTMLSpanElement>;
 
     this._forceSlider = this._settingsPanel.find('#force') as JQuery<HTMLInputElement>;
-    this._forceText = this._settingsPanel.find('#forceText');
+    this._forceText = this._settingsPanel.find('#forceText') as JQuery<HTMLSpanElement>;
 
-    this._perf = this._settingsPanel.find('#perf');
-    this._totalParticle = this._settingsPanel.find('#totalParticle');
+    this._perf = this._settingsPanel.find('#perf') as JQuery<HTMLSpanElement>;
+    this._totalParticle = this._settingsPanel.find('#totalParticle') as JQuery<HTMLSpanElement>;
 
     this._colorPicker = new Picker({
       parent: this._settingsPanel.find('#colorPicker')[0],
@@ -100,6 +100,10 @@ export class SettingsGui {
     this._forceSlider.on('input change', () => {
       this._settings.force = this._forceSlider.val() as number;
       this.updateGUI();
+    });
+
+    this._settingsPanel.find('input').on('keydown', (e) => {
+      e.preventDefault();
     });
 
     this.setDefault();

@@ -158,7 +158,10 @@ export class ParticleRenderer {
     this._gl.memoryBarrier(this._gl.VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
 
     // rendering
+
     this._gl.useProgram(this._shadingProgram);
+
+    /**/
     this._gl.bindVertexArray(this._vao);
 
     this._gl.uniformMatrix4fv(this._projectionMatrixLoc, false, this._threeCamera.projectionMatrix.toArray());
@@ -169,6 +172,21 @@ export class ParticleRenderer {
     this._gl.drawArrays(this._gl.POINTS, 0, this._particleCount);
 
     this._gl.bindVertexArray(null);
+    /**/
+
+    /*/
+    // alternate drawing
+    this._gl.bindBuffer(this._gl.ARRAY_BUFFER, this._posBuffer);
+    this._gl.uniformMatrix4fv(this._projectionMatrixLoc, false, this._threeCamera.projectionMatrix.toArray());
+    this._gl.uniformMatrix4fv(this._viewMatrixLoc, false, this._threeCamera.matrixWorldInverse.toArray());
+    this._gl.uniform4fv(this._colorLoc, this._settingsObject.color.toArray());
+    this._gl.uniform1f(this._pointSizeLoc, this._settingsObject.particleSize);
+    this._gl.enableVertexAttribArray(0);
+    this._gl.vertexAttribPointer(0, 4, this._gl.FLOAT, false, 0, 0);
+    this._gl.drawArrays(this._gl.POINTS, 0, this._particleCount);
+    this._gl.disableVertexAttribArray(0);
+    this._gl.bindBuffer(this._gl.ARRAY_BUFFER, null);
+    /**/
   }
 
   private _logComputeThings(): void {
@@ -191,7 +209,7 @@ export class ParticleRenderer {
     if (newParticleCount !== this._particleCount) {
       this._particleCount = newParticleCount;
 
-      this._dispatchGroups = Math.trunc(this._particleCount / 1024) + 1;
+      this._dispatchGroups = Math.trunc(this._particleCount / 2 ** 7) + 1;
 
       /**/
       this._gl.bindBuffer(this._gl.SHADER_STORAGE_BUFFER, this._posBuffer);
